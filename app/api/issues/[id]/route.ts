@@ -20,29 +20,31 @@ export async function PATCH(
     return NextResponse.json({ error: "invalid issue" }, { status: 404 });
 
   const updatedIssue = await prisma.issue.update({
-    where: {id: issue.id},
+    where: { id: issue.id },
     data: {
-        title: body.title,
-        description: body.description,
-    }
+      title: body.title,
+      description: body.description,
+    },
   });
 
   return NextResponse.json(updatedIssue);
-};
-
+}
 
 export async function DELETE(
   request: NextRequest,
   { params }: { params: { id: string } }
 ) {
+  console.log({ params });
+
   const issue = await prisma.issue.findUnique({
-    where: {id: parseInt(params.id)}
-  })
+    where: { id: parseInt(params.id) },
+  });
 
-  if(!issue) return NextResponse.json({error: "invalid Issue"}, {status: 404});
+  if (!issue)
+    return NextResponse.json({ error: "invalid Issue" }, { status: 404 });
 
-  const deletedIssue = await prisma.issue.delete({
-    where: {id: issue.id}
+  await prisma.issue.delete({
+    where: { id: issue.id },
   });
   return NextResponse.json({});
 }
