@@ -25,7 +25,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.variable}>
+      <body className={inter.variable} suppressHydrationWarning={true}>
         <AuthProvider>
           <Theme accentColor="purple" radius="large">
             <NavBar />
